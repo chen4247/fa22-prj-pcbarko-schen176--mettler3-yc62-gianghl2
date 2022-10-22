@@ -5,7 +5,7 @@
 - Patrick Barko pcbarko
 - Stephanie Chen schen176
 - Matt Mettler mettler3
-- Giang Ha Li gianghl2
+- Giang Ha Le gianghl2
 - Yongxin Cai yc62
 
 Spotify is an audio streaming service used by *hundreds of millions* of people. 
