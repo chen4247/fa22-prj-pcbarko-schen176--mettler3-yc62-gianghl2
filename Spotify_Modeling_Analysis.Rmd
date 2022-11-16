@@ -19,6 +19,7 @@ library(e1071)
 ## Initialize Data
 
 ```{r}
+#Loda Data
 data <- readRDS("C:/Users/steph/OneDrive/Documents/Stat447/Final_Project/Spotify_Practice_Data.RDS")
 head(data)
 summary(data)
@@ -66,14 +67,14 @@ rf_reg_fit
 
 #Tune model (later)
 
-#Compute RMSE and R^2 from true and predicted values
+#Function that computes RMSE and R^2 from true and predicted values
 eval_results <- function(true, predicted, df) {
   SSE <- sum((predicted - true)^2)
   SST <- sum((true - mean(true))^2)
   R_square <- 1 - SSE / SST
   RMSE <- sqrt(SSE/nrow(df))
 
-  #Model performance metrics
+  #Summarize model performance metrics
   data.frame(
     RMSE <- RMSE,
     Rsquare <- R_square
@@ -141,7 +142,7 @@ reg_test_sc_dummy[, 2:13] <- predict(pre_proc_val, reg_test_sc_dummy[, 2:13])
 
 summary(reg_train_sc_dummy)
 
-#Fit Ridge Regression
+#Fit ridge regression
 
 #Find optimal lambda
 lambdas <- 10^seq(2, -3, by = -.1)
@@ -165,7 +166,7 @@ ridge_reg_res <- eval_results(reg_test_sc_dummy[, 1], ridge_pred_y, reg_test_sc_
 ### 4) Lasso Regression
 
 ```{r}
-#Fit Lasso Regression
+#Fit lasso regression
 
 #Find optimal lambda
 lambdas <- 10^seq(2, -3, by = -.1)
@@ -184,7 +185,7 @@ lasso_reg_res <- eval_results(reg_test_sc_dummy[, 1], lasso_pred_y, reg_test_sc_
 ### 5) Support Vector Regression
 
 ```{r}
-#Fit Support Vector Regression
+#Fit support vector regression
 svm_reg_fit <- svm(Popularity~., data = reg_train)
 
 #Tune model (later)
@@ -197,7 +198,7 @@ svm_reg_res <- eval_results(as.matrix(reg_test[, 1]), svm_reg_pred_y, as.matrix(
 ### Summarize Results
 
 ```{r}
-#Make a table of results
+#Make a table of regression results
 tab <- matrix(c(rf_reg_res, gbm_reg_res, ridge_reg_res, lasso_reg_res, 
                 svm_reg_res), nrow = 5, ncol = 2, byrow = TRUE)
 rownames(tab) <- c("Random Forest", "GBM", "Ridge", "Lasso", "SVM")
@@ -340,7 +341,7 @@ svm_table <- confusionMatrix(table)
 ### Summarize Results
 
 ```{r}
-#Make a table of results
+#Make a table of classification results
 tab <- matrix(c(rf_table$overall[1], gbm_table$overall[1], knn_table$overall[1],
                 lda_table$overall[1], svm_table$overall[1]), 
               nrow = 5, ncol = 1, byrow = TRUE)
